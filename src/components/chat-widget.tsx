@@ -28,7 +28,7 @@ export default function ChatWidget() {
     setIsLoading,
     textDirection,
     showContact,
-    handleShowContact,
+    // handleShowContact,
     handleCloseContact,
     handleCloseChat,
   } = useChatWidget();
@@ -163,11 +163,11 @@ export default function ChatWidget() {
             }`}
           >
             <p className="text-center text-black text-[10px]">
-              RAED may make mistakes. Please verify important information. Do
+              Bridge may make mistakes. Please verify important information. Do
               not share sensitive or personal information.
               <span>
                 <button
-                  onClick={handleShowContact}
+                  // onClick={handleShowContact}
                   className="text-[#083032] ml-1 underline text-[12px]"
                 >
                   Contact Us

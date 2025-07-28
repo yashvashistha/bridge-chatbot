@@ -60,7 +60,8 @@ export const ChatMessages: FC<ChatMessagesProps> = ({
                 isExpanded && !isMobile ? "text-base" : "text-xs"
               }`}
             >
-              I&apos;m here to help you with all your policy-related questions.
+              I&apos;m here to help you with all your HR policy-related
+              questions.
             </p>
             <p className="text-center font-bold text-xs text-[#3C3C3C]">
               How can I help you today?

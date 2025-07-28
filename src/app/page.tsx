@@ -2,7 +2,7 @@
 import { useTranslation } from "react-i18next";
 import "./i18n";
 import ChatWidget from "@/src/components/chat-widget";
-import LanguageButton from "@/src/components/language-button";
+// import LanguageButton from "@/src/components/language-button";
 import { useEffect } from "react";
 import axios from "axios";
 
@@ -11,11 +11,11 @@ export default function MainPage() {
 
   const url =
     process.env.NEXT_PUBLIC_API_URL ||
-    "https://ecoapilwebapp02-ash2f8e6fcgzexgq.centralindia-01.azurewebsites.net/api/v1";
+    "https://ecoapilwebapp02-ash2f8e6fcgzexgq.centralindia-01.azurewebsites.net/api";
 
   const CSRFToken = async () => {
     try {
-      const response = await axios.get(`${url}/get-csrf-token`);
+      const response = await axios.get(`${url}/v1/get-csrf-token`);
       return response.data.csrf_token;
     } catch (err) {
       console.error("Error in CSRF Token", err);
@@ -31,7 +31,7 @@ export default function MainPage() {
           const config = {
             method: "post",
             maxBodyLength: Number.POSITIVE_INFINITY,
-            url: `${url}/refresh_token`,
+            url: `${url}/v1/refresh_token`,
             headers: {
               accept: "application/json",
               "Content-Type": "application/json",
@@ -68,8 +68,11 @@ export default function MainPage() {
   return (
     <div className="relative w-screen h-screen bg-gradient-to-br from-blue-600 to-purple-800 flex flex-col items-center justify-center text-white text-center p-6">
       <h1 className="text-3xl font-bold mb-4">{t("project.title")}</h1>
-      <p className="text-lg max-w-xl">{t("project.description")}</p>
-      <LanguageButton />
+      {/* <p className="text-lg max-w-xl">{t("project.description")}</p> */}
+      <p className="text-lg max-w-xl">
+        This Project demonstrates a chatbot with HR Support
+      </p>
+      {/* <LanguageButton /> */}
       <ChatWidget />
     </div>
   );

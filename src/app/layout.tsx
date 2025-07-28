@@ -6,7 +6,7 @@ import { Outfit } from "next/font/google";
 const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "HR Chat Bot",
+  title: "Bridge Chat Bot",
   description: "",
 };
 

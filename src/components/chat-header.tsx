@@ -1,10 +1,16 @@
-"use client"
+"use client";
 
-import Image from "next/image"
+import Image from "next/image";
 // import { useTranslation } from "react-i18next";
-import type { ChatHeaderProps } from "../types/chat-wedgit-types"
+import type { ChatHeaderProps } from "../types/chat-wedgit-types";
 
-export const ChatHeader = ({ handleReset, handleCloseChat, isExpanded, setIsExpanded, isMobile }: ChatHeaderProps) => {
+export const ChatHeader = ({
+  handleReset,
+  handleCloseChat,
+  isExpanded,
+  setIsExpanded,
+  isMobile,
+}: ChatHeaderProps) => {
   // const { i18n } = useTranslation();
   // const isArabic = i18n.language === "ar";
 
@@ -27,24 +33,46 @@ export const ChatHeader = ({ handleReset, handleCloseChat, isExpanded, setIsExpa
           </button>
         )}
         <button onClick={handleReset}>
-          <Image src="/assets/refresh.svg" alt="chat icon" width={14} height={14} />
+          <Image
+            src="/assets/refresh.svg"
+            alt="chat icon"
+            width={14}
+            height={14}
+          />
         </button>
         <button onClick={handleCloseChat}>
-          <Image src="/assets/close-white.svg" alt="chat icon" width={14} height={14} />
+          <Image
+            src="/assets/close-white.svg"
+            alt="chat icon"
+            width={14}
+            height={14}
+          />
         </button>
       </div>
 
       <div className="bg-[url(/assets/header-background.png)] bg-no-repeat bg-left bg-contain flex flex-col gap-2 items-center justify-center">
-        <Image src="/assets/logo.svg" alt="chat icon" width={66} height={66} className="rounded-full mt-3" />
         <Image
+          src="/assets/bridge-icon.svg"
+          alt="chat icon"
+          width={66}
+          height={66}
+          className="rounded-full mt-3"
+        />
+        {/* <Image
           src="/assets/header-icon.svg"
           alt="chat icon"
           width={24}
           height={24}
-          className={`absolute ${isExpanded && !isMobile ? "end-[47.5%]" : "end-[41%]"} bottom-10`}
-        />
-        <p className={`text-white font-semibold text-base mb-3 ${isExpanded && !isMobile ? "text-2xl" : "text-base"}`}>
-          Welcome to RAED
+          className={`absolute ${
+            isExpanded && !isMobile ? "end-[47.5%]" : "end-[41%]"
+          } bottom-10`}
+        /> */}
+        <p
+          className={`text-white font-semibold text-base mb-3 ${
+            isExpanded && !isMobile ? "text-2xl" : "text-base"
+          }`}
+        >
+          Welcome to Bridge
         </p>
       </div>
       {/* 
@@ -58,5 +86,5 @@ export const ChatHeader = ({ handleReset, handleCloseChat, isExpanded, setIsExpa
                 </button>
             </div> */}
     </div>
-  )
-}
+  );
+};
