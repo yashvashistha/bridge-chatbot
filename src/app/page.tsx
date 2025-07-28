@@ -57,7 +57,7 @@ export default function MainPage() {
       };
 
       refreshToken(); // First time
-      const interval = setInterval(refreshToken, 1 * 60 * 1000); // every 12 mins
+      const interval = setInterval(refreshToken, 12 * 60 * 1000); // every 12 mins
 
       return () => clearInterval(interval); // cleanup
     }, []);
