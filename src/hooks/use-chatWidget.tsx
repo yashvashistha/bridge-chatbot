@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import DOMPurify from "dompurify";
 import { Message } from "@/src/types/chat-wedgit-types";
 import sendMessageApi from "@/src/Api/get-chat";
-import { marked } from "marked";
 
 export function useChatWidget() {
   const { t } = useTranslation();
@@ -18,9 +17,11 @@ export function useChatWidget() {
   const [feedbackShown, setFeedbackShown] = useState(false);
   const [showAssistanceForm, setShowAssistanceForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [textDirection, setTextDirection] = useState<
-    "en-to-ar" | "ar-to-en" | null
-  >(null);
+  // const [textDirection, setTextDirection] = useState<
+  //   "en-to-ar" | "ar-to-en" | null
+  // >(null);
+
+  const textDirection = null;
 
   const messageOptions = useMemo(
     () => [
@@ -47,14 +48,11 @@ export function useChatWidget() {
       setShowAssistanceForm(false);
       setIsLoading(true);
 
-      let storedSessionId: string | null =
-        sessionStorage.getItem("chatSessionId");
+      // const storedSessionId: string | null =
+      //   sessionStorage.getItem("chatSessionId");
 
       try {
-        const apiResponse = await sendMessageApi(
-          userMessage,
-          storedSessionId ?? null
-        );
+        const apiResponse = await sendMessageApi(userMessage);
         console.log("API Response:", apiResponse);
 
         setMessages((prev) => [
@@ -134,11 +132,11 @@ export function useChatWidget() {
     [input, isLoading]
   );
 
-  const arabicToEnglishNumbers = (str: string) => {
-    return str.replace(/[\u0660-\u0669]/g, (d) =>
-      String(d.charCodeAt(0) - 0x0660)
-    );
-  };
+  // const arabicToEnglishNumbers = (str: string) => {
+  //   return str.replace(/[\u0660-\u0669]/g, (d) =>
+  //     String(d.charCodeAt(0) - 0x0660)
+  //   );
+  // };
 
   // Close assistance form
   const handleCloseAssistanceForm = useCallback(() => {

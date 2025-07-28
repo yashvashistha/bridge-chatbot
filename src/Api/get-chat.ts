@@ -1,6 +1,3 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-
 interface WSResponseChunk {
   result?: {
     response?: string;
@@ -36,8 +33,8 @@ function buildWebSocketUrl(conversationId: string, token: string): string {
 }
 
 const sendMessage = async (
-  message: string,
-  sessionId: string | null
+  message: string
+  // sessionId: string | null
 ): Promise<string> => {
   try {
     const userDetails = {
@@ -72,7 +69,7 @@ const sendMessage = async (
     const ws = new WebSocket(socketUrl);
 
     return await new Promise((resolve, reject) => {
-      let responseText = "";
+      // let responseText = "";
 
       ws.onopen = () => {
         console.log("WebSocket connected");
@@ -100,12 +97,10 @@ const sendMessage = async (
             }
 
             if (result?.response) {
-              responseText += result.response;
+              // responseText += result.response;
               resolve(result.response);
               ws.close();
             }
-          } else {
-            responseText += chunk;
           }
         } catch (e) {
           console.error("Failed to process chunk", e);

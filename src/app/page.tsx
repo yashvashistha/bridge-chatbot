@@ -6,8 +6,6 @@ import LanguageButton from "@/src/components/language-button";
 import { useEffect } from "react";
 import axios from "axios";
 
-const REFRESH_INTERVAL = 1 * 6 * 1000;
-
 export default function MainPage() {
   const { t } = useTranslation();
 

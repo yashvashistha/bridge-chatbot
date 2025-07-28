@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useState, useEffect } from "react"
-import ChatButton from "./chat-button"
-import { ChatHeader } from "./chat-header"
-import { ChatMessages } from "./chat-messages"
-import { ChatInput } from "./chat-input"
-import { useChatWidget } from "../hooks/use-chatWidget"
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import ChatButton from "./chat-button";
+import { ChatHeader } from "./chat-header";
+import { ChatMessages } from "./chat-messages";
+import { ChatInput } from "./chat-input";
+import { useChatWidget } from "../hooks/use-chatWidget";
 
 export default function ChatWidget() {
   const {
@@ -31,24 +31,24 @@ export default function ChatWidget() {
     handleShowContact,
     handleCloseContact,
     handleCloseChat,
-  } = useChatWidget()
+  } = useChatWidget();
 
-  const [isExpanded, setIsExpanded] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768)
+    setIsMobile(window.innerWidth < 768);
 
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
+      setIsMobile(window.innerWidth < 768);
+    };
 
-    window.addEventListener("resize", handleResize)
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize)
-    }
-  }, [])
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     if (window.parent !== window) {
@@ -56,48 +56,51 @@ export default function ChatWidget() {
         isOpen,
         isExpanded: isExpanded && !isMobile,
         isMobile,
-      }
-      console.log("Sending widget state to parent:", widgetState) // Debug log
-      window.parent.postMessage({ type: "WIDGET_STATE_CHANGE", ...widgetState }, "*")
+      };
+      console.log("Sending widget state to parent:", widgetState); // Debug log
+      window.parent.postMessage(
+        { type: "WIDGET_STATE_CHANGE", ...widgetState },
+        "*"
+      );
     }
-  }, [isOpen, isExpanded, isMobile])
+  }, [isOpen, isExpanded, isMobile]);
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       if (event.data.type === "CLOSE_WIDGET") {
-        setIsOpen(false)
-        setIsExpanded(false)
+        setIsOpen(false);
+        setIsExpanded(false);
       }
-    }
+    };
 
-    window.addEventListener("message", handleMessage)
-    return () => window.removeEventListener("message", handleMessage)
-  }, [setIsOpen])
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [setIsOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (!isOpen) return
+      if (!isOpen) return;
 
-      const target = event.target as Element
-      const chatContainer = document.querySelector('[data-chat-widget]')
-      
+      const target = event.target as Element;
+      const chatContainer = document.querySelector("[data-chat-widget]");
+
       if (chatContainer && !chatContainer.contains(target)) {
-        const chatButton = document.querySelector('[data-chat-button]')
+        const chatButton = document.querySelector("[data-chat-button]");
         if (chatButton && !chatButton.contains(target)) {
-          setIsOpen(false)
-          setIsExpanded(false)
+          setIsOpen(false);
+          setIsExpanded(false);
         }
       }
-    }
+    };
 
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [isOpen, setIsOpen])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, setIsOpen]);
 
   return (
     <>
@@ -155,13 +158,18 @@ export default function ChatWidget() {
           />
 
           <div
-            className={`flex items-center justify-center gap-2 ${!isExpanded || isMobile ? "flex-col" : "flex-row"}`}
+            className={`flex items-center justify-center gap-2 ${
+              !isExpanded || isMobile ? "flex-col" : "flex-row"
+            }`}
           >
             <p className="text-center text-black text-[10px]">
-              RAED may make mistakes. Please verify important information. Do not share sensitive or personal
-              information.
+              RAED may make mistakes. Please verify important information. Do
+              not share sensitive or personal information.
               <span>
-                <button onClick={handleShowContact} className="text-[#083032] ml-1 underline text-[12px]">
+                <button
+                  onClick={handleShowContact}
+                  className="text-[#083032] ml-1 underline text-[12px]"
+                >
                   Contact Us
                 </button>
               </span>
@@ -170,5 +178,5 @@ export default function ChatWidget() {
         </motion.div>
       )}
     </>
-  )
+  );
 }

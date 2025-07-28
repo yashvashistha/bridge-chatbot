@@ -32,9 +32,9 @@ export interface ChatMessagesProps {
   isMobile: boolean;
   setIsLoading: (isLoading: boolean) => void;
   textDirection: "en-to-ar" | "ar-to-en" | null;
-  showContact: boolean,
-  handleCloseContact: () => void,
-  handleCloseChat: () => void
+  showContact: boolean;
+  handleCloseContact: () => void;
+  handleCloseChat: () => void;
 }
 
 export interface AssistanceFormProps {
@@ -59,14 +59,14 @@ export interface MessageOptionsProps {
 
 export interface ChatFeedbackProps {
   handleCloseFeedback: () => void;
-  handleCloseChat: () => void
-  scrollToBottom: (ref: React.RefObject<HTMLDivElement | null>) => void
+  handleCloseChat: () => void;
+  scrollToBottom: (ref: React.RefObject<HTMLDivElement | null>) => void;
   feedbackContainerRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 export interface ChatContactProps {
   handleCloseContact: () => void;
-  isSmallScreen: boolean
+  isSmallScreen: boolean;
   contactContainerRef?: React.RefObject<HTMLDivElement | null>;
 }
 
@@ -76,5 +76,5 @@ export interface ChatInputProps {
   sendMessage: (message?: string) => void;
   showSecondryOptions: boolean;
   isLoading: boolean;
-  isOpen: boolean
+  isOpen: boolean;
 }
