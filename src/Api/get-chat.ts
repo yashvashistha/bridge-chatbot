@@ -12,7 +12,34 @@ interface WSResponseChunk {
   };
 }
 
+interface Message {
+  id: number;
+  source: "User" | "AI" | string;
+  message: string;
+}
+
+interface FormattedMessage {
+  user?: string;
+  assistant?: string;
+}
+
+const formatMessagesForPayload = (messages: Message[]): FormattedMessage[] => {
+  const latestMessages = messages.slice(-10);
+  return latestMessages
+    .map((msg) => {
+      if (msg.source === "User") {
+        return { user: msg.message };
+      } else if (msg.source === "AI") {
+        return { assistant: msg.message };
+      }
+      return null;
+    })
+    .filter((msg): msg is NonNullable<typeof msg> => msg !== null);
+};
+
 let convID = "";
+
+const messages: Message[] = [];
 
 const WEBSOCKET_BASE =
   process.env.NEXT_PUBLIC_WEBSOCKET_URL ||
@@ -48,6 +75,14 @@ const sendMessage = async (
       throw new Error("Missing token or session ID");
     }
 
+    messages.push({
+      id: messages.length + 1,
+      source: "User",
+      message: message,
+    });
+
+    const formattedMessages = formatMessagesForPayload(messages);
+
     // 1. Format the payload
     const payload = {
       metadata: {
@@ -59,7 +94,7 @@ const sendMessage = async (
         k: 3,
       },
       message_text: message,
-      messages: [],
+      messages: formattedMessages,
       app_id: "534dcbe8694011f0a2026a872321dae9", // optional
       ...(convID !== "" && { conversation_id: convID }),
     };
@@ -98,6 +133,12 @@ const sendMessage = async (
 
             if (result?.response) {
               // responseText += result.response;
+
+              messages.push({
+                id: messages.length + 1,
+                source: "AI",
+                message: result.response,
+              });
               resolve(result.response);
               ws.close();
             }

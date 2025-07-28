@@ -5,6 +5,7 @@ import { ChatInputProps } from "../types/chat-wedgit-types";
 import { Upload } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import ChatFileUploader from "./ChatFileUploader";
 
 const secondryOptions = [
   "What is GAMI?",
@@ -55,6 +56,7 @@ ChatInputProps) => {
   const [showCommandMenu, setShowCommandMenu] = useState(false);
   const [activeCommand, setActiveCommand] = useState("");
   //   const [highlightedIndex, setHighlightedIndex] = useState(0);
+  const [isUpload, setIsUpload] = useState(false);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -81,79 +83,6 @@ ChatInputProps) => {
       setActiveCommand("");
     }
   };
-
-  //   const insertFileToken = (filename: string, metadata: any) => {
-  //     if (!inputRef.current) return;
-
-  //     const input = inputRef.current;
-  //     const placeholder = document.createElement("span");
-  //     placeholder.id = "file-token-placeholder";
-
-  //     let replaced = false;
-
-  //     // Safely walk through childNodes (which include both Text and Element nodes)
-  //     const nodes = Array.from(input.childNodes);
-  //     for (const node of nodes) {
-  //       if (node.nodeType === Node.TEXT_NODE && !replaced) {
-  //         const textNode = node as Text;
-  //         const index = textNode.textContent?.indexOf("/file:");
-  //         if (index !== -1) {
-  //           const beforeText = textNode.textContent?.substring(0, index) || "";
-  //           const afterText = textNode.textContent?.substring(index + 6) || "";
-
-  //           const beforeNode = document.createTextNode(beforeText);
-  //           const afterNode = document.createTextNode(afterText);
-
-  //           input.insertBefore(beforeNode, textNode);
-  //           input.insertBefore(placeholder, textNode);
-  //           input.insertBefore(afterNode, textNode);
-  //           input.removeChild(textNode);
-
-  //           replaced = true;
-  //           break;
-  //         }
-  //       }
-  //     }
-
-  //     // Create token
-  //     const token = document.createElement("span");
-  //     token.className =
-  //       "token-span inline-flex items-center gap-1 px-2 py-0.5 mr-1 rounded-md text-xs font-medium bg-green-200 text-green-800 border border-green-300";
-  //     token.contentEditable = "false";
-  //     token.setAttribute("data-type", "file");
-  //     token.setAttribute("data-value", filename);
-  //     token.setAttribute("data-metadata", JSON.stringify(metadata));
-  //     token.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2-2V7.5L14.5 2z"></path></svg> <span class="select-none">${filename}</span>`;
-
-  //     const space = document.createTextNode(" ");
-
-  //     // Insert token in place of placeholder
-  //     const placeholderElement = document.getElementById(
-  //       "file-token-placeholder"
-  //     );
-  //     if (placeholderElement && placeholderElement.parentNode) {
-  //       placeholderElement.parentNode.replaceChild(token, placeholderElement);
-  //       token.parentNode?.insertBefore(space, token.nextSibling);
-  //     } else {
-  //       // fallback: insert at the end
-  //       input.appendChild(token);
-  //       input.appendChild(space);
-  //     }
-
-  //     // Move caret after the space node
-  //     const sel = window.getSelection();
-  //     const newRange = document.createRange();
-  //     newRange.setStartAfter(space);
-  //     newRange.collapse(true);
-  //     if (sel) {
-  //       sel.removeAllRanges();
-  //       sel.addRange(newRange);
-  //     }
-
-  //     setShowCommandMenu(false);
-  //     setActiveCommand("");
-  //     setInput(getPlainText());
-  //   };
 
   const insertFileToken = (filename: string, metadata: any) => {
     if (!inputRef.current) return;
@@ -401,7 +330,7 @@ ChatInputProps) => {
     } else {
       setShowCommandMenu(false);
     }
-  }, [input]);
+  }, [input, currentFolderId]);
 
   const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
     const el = e.currentTarget;
@@ -480,7 +409,7 @@ ChatInputProps) => {
       )}
       <div className="flex max-h-[10dvh] items-center relative bg-[#EFF1F1] border-[.5px] border-[#E4E7E7] rounded-2xl overflow-hidden px-2 gap-2">
         <button
-          // onClick={() => setOpenUploadFileModal(true)}
+          onClick={() => setIsUpload(true)}
           className="rounded-full h-9 w-9"
         >
           <Upload className="h-4 w-4 text-black" />
@@ -515,6 +444,16 @@ ChatInputProps) => {
           />
         </button>
       </div>
+
+      {isUpload && (
+        <ChatFileUploader
+          isOpen={isUpload}
+          onClose={() => {
+            setIsUpload(false);
+          }}
+          insertFileToken={insertFileToken}
+        />
+      )}
     </div>
   );
 };
