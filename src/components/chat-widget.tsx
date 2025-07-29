@@ -163,7 +163,7 @@ export default function ChatWidget() {
             }`}
           >
             <p className="text-center text-black text-[10px]">
-              Bridge may make mistakes. Please verify important information. Do
+              Eko.AI may make mistakes. Please verify important information. Do
               not share sensitive or personal information.
               <span>
                 <button

@@ -72,7 +72,7 @@ export const ChatHeader = ({
             isExpanded && !isMobile ? "text-2xl" : "text-base"
           }`}
         >
-          Welcome to Bridge
+          Welcome to Eko.AI
         </p>
       </div>
       {/* 
