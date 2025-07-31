@@ -67,7 +67,7 @@ const sendMessage = async (
     const userDetails = {
       access_token:
         localStorage.getItem("access_token") ||
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTM2ODI5MzksInN1YiI6Inlhc2h2YXNoaXNodGhhIn0.2FZFJEzXRI2ZSy7MDXYJQb_sz7t9-KizglLCtSGSN5U",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTM5NjUyOTcsInN1YiI6InRlc3QxMDAwMSJ9.zV5FxTz7pufLP-zHHZsmgM85pVI9BP8MBml4e9rmNFU",
     };
 
     const token = `Bearer ${userDetails.access_token}`;

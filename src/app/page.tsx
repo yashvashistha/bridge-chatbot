@@ -40,7 +40,7 @@ export default function MainPage() {
             data: {
               token:
                 localStorage.getItem("refresh_token") ||
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTM3Njc1NDYsInN1YiI6Inlhc2h2YXNoaXNodGhhIn0.oy8CD8NrUA1RfQbF_4oJJO1nRPci9HTy_sIm8jY5uOc",
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTQwNTA3OTcsInN1YiI6InRlc3QxMDAwMSJ9.f6Bx8Jj7HIj_rR-9szSM0wQKD2WXQo-FEyJxXd2yCoU",
             },
           };
           const response = await axios.request(config);
