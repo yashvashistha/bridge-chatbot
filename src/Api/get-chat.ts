@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 interface WSResponseChunk {
   result?: {
     response?: string;
@@ -10,6 +12,20 @@ interface WSResponseChunk {
       persona?: string;
     };
   };
+}
+
+interface UserDetails {
+  user_name: string;
+  user_role: string;
+  designation: string;
+  user_login_id: string;
+  access_token: string;
+  refresh_token: string;
+  api_key?: string;
+  user_uuid: string;
+  email_id: string;
+  department: string;
+  location: string;
 }
 
 interface Message {
@@ -59,19 +75,25 @@ function buildWebSocketUrl(conversationId: string, token: string): string {
   return `${WEBSOCKET_BASE}/api/v2/ws/${conversationId}?token=${token}`;
 }
 
+const getUserDetails = (): UserDetails | null => {
+  const userDetails = Cookies.get("EkoBot");
+  if (!userDetails) return null;
+  try {
+    return JSON.parse(userDetails) as UserDetails;
+  } catch {
+    return null;
+  }
+};
+
 const sendMessage = async (
   message: string
   // sessionId: string | null
 ): Promise<string> => {
   try {
-    const userDetails = {
-      access_token:
-        localStorage.getItem("access_token") ||
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTM5NjUyOTcsInN1YiI6InRlc3QxMDAwMSJ9.zV5FxTz7pufLP-zHHZsmgM85pVI9BP8MBml4e9rmNFU",
-    };
+    const userDetails = getUserDetails();
 
-    const token = `Bearer ${userDetails.access_token}`;
-    if (!userDetails.access_token) {
+    const token = `Bearer ${userDetails?.access_token}`;
+    if (!userDetails?.access_token) {
       throw new Error("Missing token or session ID");
     }
 

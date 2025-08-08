@@ -1,6 +1,6 @@
 import Image from "next/image";
-// import { useTranslation } from "react-i18next";
 import { ChatInputProps } from "../types/chat-wedgit-types";
+import Cookies from "js-cookie";
 
 import { Upload } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -35,6 +35,20 @@ type FileItem = {
   status: string;
   file_path: string;
 };
+
+interface UserDetails {
+  user_name: string;
+  user_role: string;
+  designation: string;
+  user_login_id: string;
+  access_token: string;
+  refresh_token: string;
+  api_key?: string;
+  user_uuid: string;
+  email_id: string;
+  department: string;
+  location: string;
+}
 
 export const ChatInput = ({
   input,
@@ -159,9 +173,7 @@ ChatInputProps) => {
     setInput(getPlainText());
   };
 
-  const url =
-    process.env.NEXT_PUBLIC_API_URL ||
-    "https://ecoapilwebapp02-ash2f8e6fcgzexgq.centralindia-01.azurewebsites.net/api";
+  const url = process.env.NEXT_PUBLIC_API_URL;
 
   const getCSRFtoken = async () => {
     try {
@@ -170,6 +182,16 @@ ChatInputProps) => {
     } catch (err) {
       console.error("Error in CSRF Token", err);
       return "";
+    }
+  };
+
+  const getUserDetails = (): UserDetails | null => {
+    const userDetails = Cookies.get("EkoBot");
+    if (!userDetails) return null;
+    try {
+      return JSON.parse(userDetails) as UserDetails;
+    } catch {
+      return null;
     }
   };
 
@@ -199,6 +221,8 @@ ChatInputProps) => {
               page_size: limit,
             })}`;
 
+      const userDetails = getUserDetails();
+
       const config = {
         method: "get",
         maxBodyLength: Number.POSITIVE_INFINITY,
@@ -207,9 +231,9 @@ ChatInputProps) => {
           accept: "application/json",
           "Content-Type": "application/json",
           ...(csrf ? { "X-CSRF-Token": csrf } : {}),
-          ...(localStorage.getItem("access_token")
+          ...(userDetails?.access_token
             ? {
-                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+                Authorization: `Bearer ${userDetails?.access_token}`,
               }
             : {}),
         },

@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
 import { ChatButtonProps } from "../types/chat-wedgit-types";
 import Image from "next/image";
+import { useContext } from "react";
+import { AuthContext } from "../hooks/AuthContext";
 
 const ChatButton = ({ isOpen, setIsOpen }: ChatButtonProps) => {
+  const { UserData } = useContext(AuthContext);
   return (
     <motion.button
       data-chat-button
@@ -10,7 +13,11 @@ const ChatButton = ({ isOpen, setIsOpen }: ChatButtonProps) => {
       className={`fixed bottom-3 md:bottom-6 end-6 flex items-center gap-2 bg-white ps-3 pe-2 py-2 rounded-[26px] hover:scale-110 transition-all shadow-lg`}
       whileTap={{ scale: 0.9 }}
     >
-      <p className="text-[#616161]">Welcome to Eko.AI</p>
+      <p className="text-[#616161]">
+        {UserData?.user_name && UserData.user_name !== ""
+          ? "Welcome to Eko.AI"
+          : "Login to Eko.AI"}
+      </p>
       <Image
         src="/assets/bridge-icon.svg"
         alt="Chat Icon"
