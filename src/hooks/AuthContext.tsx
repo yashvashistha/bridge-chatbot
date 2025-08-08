@@ -233,7 +233,7 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
 
   // --- Refresh Token: Use cached CSRF token if available ---
   const RefreshToken = useCallback(async () => {
-    let csrf = csrfToken || (await getCSRFtoken());
+    const csrf = csrfToken || (await getCSRFtoken());
     try {
       const userDetails = getUserDetailsFromCookie();
       if (!userDetails) throw new Error("No user details found");
