@@ -283,7 +283,7 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
       try {
         const csrf = await getCSRFtoken();
         const LoginData = {
-          user_login_id: user_login_id.trim(),
+          identifier: user_login_id.trim(),
           password: password.trim(),
         };
         const response = await axios.post(`${url}/login`, LoginData, {
@@ -375,7 +375,7 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
       try {
         await getCSRFtoken();
         const optdata = {
-          user_login_id: user_login_id,
+          identifier: user_login_id,
           otp: otp.trim(),
         };
         const response = await axios.post(
