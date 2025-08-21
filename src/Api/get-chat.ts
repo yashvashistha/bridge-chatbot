@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { Dispatch, SetStateAction } from "react";
 
 interface WSResponseChunk {
   result?: {
@@ -53,7 +54,7 @@ const formatMessagesForPayload = (messages: Message[]): FormattedMessage[] => {
     .filter((msg): msg is NonNullable<typeof msg> => msg !== null);
 };
 
-let convID = "";
+// let convID = "";
 
 const messages: Message[] = [];
 
@@ -86,7 +87,10 @@ const getUserDetails = (): UserDetails | null => {
 };
 
 const sendMessage = async (
-  message: string
+  message: string,
+  appId: string,
+  convID: string,
+  setConversation_Id: Dispatch<SetStateAction<string>>
   // sessionId: string | null
 ): Promise<string> => {
   try {
@@ -117,7 +121,7 @@ const sendMessage = async (
       },
       message_text: message,
       messages: formattedMessages,
-      app_id: "534dcbe8694011f0a2026a872321dae9", // optional
+      app_id: appId, // optional
       ...(convID !== "" && { conversation_id: convID }),
     };
 
@@ -149,8 +153,9 @@ const sendMessage = async (
             console.log("Parsed result:", result);
 
             if (convID == "" && result?.conversation_id) {
-              convID = result.conversation_id;
-              console.log("New conversation ID:", convID);
+              setConversation_Id(result.conversation_id);
+              // convID = result.conversation_id;
+              // console.log("New conversation ID:", convID);
             }
 
             if (result?.response) {

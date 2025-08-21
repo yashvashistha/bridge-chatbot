@@ -9,6 +9,8 @@ import {
   useRef,
   useCallback,
   type ReactNode,
+  type Dispatch,
+  type SetStateAction,
 } from "react";
 import Cookies from "js-cookie";
 import { APIcallFunction } from "./APIFunction";
@@ -27,6 +29,8 @@ interface AuthContextType {
   loading: boolean;
   isExpired: boolean;
   setIsExpired: (value: boolean) => void;
+  selectedApp: any;
+  setSelectedApp: Dispatch<SetStateAction<any>>;
   login: (
     user_login_id: string,
     password: string
@@ -46,6 +50,10 @@ export const AuthContext = createContext<Partial<AuthContextType>>({
     user_role: "",
     user_name: "",
     user_uuid: "",
+  },
+  selectedApp: {},
+  setSelectedApp: async () => {
+    console.error("setSearchInput was called outside of AppProvider");
   },
   login: async () => {
     return { status: 0, message: "" };
@@ -68,6 +76,12 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/v1`;
 
   // --- State ---
+
+  const [selectedApp, setSelectedApp] = useState<any>({
+    name: "EchoAIChat Bot",
+    value: "9bd39c34422c11f0939c1e51c9c660f8",
+  });
+
   const [user, setUser] = useState<string>("user");
   const [loading, setLoading] = useState<boolean>(false);
   const [csrfToken, setCsrfToken] = useState<string>("");
@@ -462,6 +476,8 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
       user,
       loading,
       UserData,
+      selectedApp,
+      setSelectedApp,
       login,
       logout,
       handleOTPEntered,

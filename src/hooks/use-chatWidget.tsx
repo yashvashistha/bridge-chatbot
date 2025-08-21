@@ -1,8 +1,9 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import DOMPurify from "dompurify";
 import { Message } from "@/src/types/chat-wedgit-types";
 import sendMessageApi from "@/src/Api/get-chat";
+import { AuthContext } from "./AuthContext";
 
 export function useChatWidget() {
   const { t } = useTranslation();
@@ -17,6 +18,16 @@ export function useChatWidget() {
   const [feedbackShown, setFeedbackShown] = useState(false);
   const [showAssistanceForm, setShowAssistanceForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { selectedApp } = useContext(AuthContext);
+  const [conversation_id, setConversation_Id] = useState<string>("");
+  // let conversation_id = "";
+
+  useEffect(() => {
+    setMessages([]);
+    setConversation_Id("");
+  }, [selectedApp]);
+
   // const [textDirection, setTextDirection] = useState<
   //   "en-to-ar" | "ar-to-en" | null
   // >(null);
@@ -51,7 +62,12 @@ export function useChatWidget() {
       setIsLoading(true);
 
       try {
-        const apiResponse = await sendMessageApi(userMessage);
+        const apiResponse = await sendMessageApi(
+          userMessage,
+          selectedApp.value,
+          conversation_id,
+          setConversation_Id
+        );
 
         setMessages((prev) => [
           ...prev,
