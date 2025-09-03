@@ -16,7 +16,7 @@ export const ChatHeader = ({
 }: ChatHeaderProps) => {
   const { logout, selectedApp, setSelectedApp } = useContext(AuthContext);
   const apps = [
-    { name: "Finance Bot", value: "0e61eb947e7211f0be8ec275eddfd3ec" },
+    { name: "Finance Bot", value: "57d7842288af11f0a31dfe4a6b0bb0db" },
     { name: "EchoAIChat Bot", value: "9bd39c34422c11f0939c1e51c9c660f8" },
   ];
   return (
