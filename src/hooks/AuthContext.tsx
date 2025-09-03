@@ -79,7 +79,7 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
 
   const [selectedApp, setSelectedApp] = useState<any>({
     name: "EchoAIChat Bot",
-    value: "9bd39c34422c11f0939c1e51c9c660f8",
+    value: "dcf87dd0872611f09003821b5c2fb60a",
   });
 
   const [user, setUser] = useState<string>("user");

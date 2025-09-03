@@ -17,7 +17,7 @@ export const ChatHeader = ({
   const { logout, selectedApp, setSelectedApp } = useContext(AuthContext);
   const apps = [
     { name: "Finance Bot", value: "57d7842288af11f0a31dfe4a6b0bb0db" },
-    { name: "EchoAIChat Bot", value: "9bd39c34422c11f0939c1e51c9c660f8" },
+    { name: "EchoAIChat Bot", value: "dcf87dd0872611f09003821b5c2fb60a" },
   ];
   return (
     <div className="bg-gradient-to-r from-[#0C4A4D] to-[#083032] relative">
