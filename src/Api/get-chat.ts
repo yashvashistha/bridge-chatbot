@@ -113,7 +113,7 @@ const sendMessage = async (
     const payload = {
       metadata: {
         persona: "general",
-        model_name: "GPT-4o",
+        model_name: "GPT-4.1",
         streaming: true,
         assistant_type: "knowledge_Based",
         temperature: 0,
